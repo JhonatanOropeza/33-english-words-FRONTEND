@@ -1,0 +1,60 @@
+
+ .ToAccess{
+    background-color: #303952;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    
+    overflow: hidden;
+ }
+ .ToAccess-Text-1{
+    position: absolute;
+    z-index: 15;
+    width: 100%;
+    height: 100%;
+}
+.ToAccess-Text-First{
+    color: white;
+    position: absolute;
+    min-width: 300px;
+    max-width: 500px;
+    max-height: 700px;
+    border: 5px solid;
+    text-align: center;
+    padding: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+.ToAccess-Transparency-2{
+    position: absolute;
+    z-index: 10;
+    background-color: #303952;
+    opacity: 0.85;
+    width: 100%;
+    height: 100%;
+}
+ .ToAccess-Video-3{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%) ;
+    -webkit-transform: translateY(-50%) ;
+    -moz-transform: translateY(-50%) ;
+    -ms-transform: translateY(-50%) ;
+    -o-transform: translateY(-50%) ;
+    z-index: 5;
+}
+
+
+
+/*  h1   */
+.ToAccess-Text-First h1{
+    font-size: 50px;
+    margin-bottom: 0;
+    font-family: 'Courier New', Courier, monospace;
+}

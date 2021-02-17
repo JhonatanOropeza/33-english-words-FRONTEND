@@ -1,0 +1,46 @@
+/*      PRINCIPAL       */
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color:green;
+    display: block;
+}
+
+
+.Main{
+    height: calc(100vh - 56px);
+    width: 100%;
+    background-color: rgb(243, 243, 243);
+    display: block;
+    justify-content: center;
+    align-items:center;
+}
+
+.Main-Center {
+    display: flex;
+}
+
+.Main_Inside_Elements{
+    display: flex;
+    justify-content: center;
+    padding: 10px 0px 10px 0px;
+}
+
+/*      ERROR     */
+.MensajeErrorBorder {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: #CBCBCB;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+/*      NAVBAR    */
+.NavbarButtonWithoutStyle{
+    border: none;
+    background: none;
+    outline: 'none'
+}
