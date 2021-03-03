@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Player, ControlBar } from 'video-react';
 
-import First from './first';
-import Login from './login';
-import Logup from './logup';
+//import First from './first';
+//import Login from './login';
+//import Logup from './logup';
 
 const linkVideo = process.env.REACT_APP_VIDEO_FOR_LOG;
 
