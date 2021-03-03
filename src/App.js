@@ -2,7 +2,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Player, ControlBar } from 'video-react';
 
 //import ClimbingBoxLoader from "react-spinners/ClimbingBoxLoader"
 
@@ -20,9 +19,7 @@ import {
   gettingTokenFromLocalStorage,
   getToken
 } from './helpers/auth-helpers';
-import First from './components/2_Access/first'
-import Login from './components/2_Access/login'
-import Logup from './components/2_Access/logup'
+import PrincipalNoLogin from './components/2_Access/PrincipalNoLogin';
 import Loading from './components/1_General/Loading'
 //import Mensaje_error from './components/mensaje_error'
 
@@ -130,28 +127,11 @@ export default class App extends Component {
 class ToAccess extends Component {
   render() {
     return (
-      <div className="ToAccess">
-
-        <div className="ToAccess-Text-1">
-          <div className="ToAccess-Text-First">
-            <Switch>
-              <Route path="/signin" render={() => <Login signin={this.props.signin} />} />
-              <Route path="/signup" render={() => <Logup />} />
-              <Route render={() => <First />} default />
-            </Switch>
-          </div>
-        </div>
-
-        <div className="ToAccess-Transparency-2"></div>
-
-        <div className="ToAccess-Video-3">
-          <Player loop autoPlay>
-            <ControlBar disableDefaultControls disableCompletely />
-            <source src="/Videos/video1.mp4" type="video/mp4" />
-          </Player>
-        </div>
-
-      </div>
+      <Switch>
+        <Route path="/signin" render={() => <PrincipalNoLogin option={1} signin={this.props.signin} />} />
+        <Route path="/signup" render={() => <PrincipalNoLogin option={2}/>} />
+        <Route render={() => <PrincipalNoLogin option={0}/>} default />
+      </Switch>
     )
   }
 }

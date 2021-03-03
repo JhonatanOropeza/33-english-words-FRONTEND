@@ -9,7 +9,7 @@ export default class ColumWord extends Component {
                 {
                     Object.keys(this.props.dato).length === 0 &&
                     <div className="text-center ">
-                        <p>You haven´t added any word in this gruop</p>
+                        <p>You haven´t added any word in this group</p>
                         <Link to={'/new_word'} className="btn btn-outline-warning btn-sm">
                             Add one
                 </Link>

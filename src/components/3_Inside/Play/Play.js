@@ -132,7 +132,7 @@ export default class Play extends Component {
                                             </p>
                                         </div>
                                         <div className="card-footer text-center">
-                                            {(Object.keys(dato).length > 0) && (this.state.totales[index] > 1)
+                                            {(Object.keys(dato).length > 0) && (this.state.totales[index] > 0)
                                                 ?
                                                 <button
                                                     className="btn btn-warning"

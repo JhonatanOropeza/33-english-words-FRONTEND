@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 import MensajeError from '../1_General/mensajeError'
 
@@ -48,37 +48,36 @@ export default class login extends Component {
     render() {
         return (
             <div className="center-block">
-                <h2>Remember Words in English</h2>
-                <h2>- LOGIN -</h2>
-                <p>Enter the following data</p>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <input type="text"
-                            className="form-control"
-                            placeholder="Email"
-                            name="email"
-                            onChange={this.selecting_user_dates}
-                            required />
-                    </div>
-                    <div className="form-group">
-                        <input type="password"
-                            className="form-control"
-                            placeholder="Password"
-                            name="password"
-                            onChange={this.selecting_user_dates}
-                            required />
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">
-                            Access
-                        </button>
-                    </div>
-                </form>
+            <h2>Remember Words in English</h2>
+            <h2>- LOGIN -</h2>
+            <p>Enter the following data</p>
+            <form onSubmit={this.onSubmit}>
                 <div className="form-group">
-                    <MensajeError mensaje_error={this.state.mensaje_error} delete_error_message={this.delete_error_message} />
+                    <input type="text"
+                        className="form-control"
+                        placeholder="Email"
+                        name="email"
+                        onChange={this.selecting_user_dates}
+                        required />
                 </div>
+                <div className="form-group">
+                    <input type="password"
+                        className="form-control"
+                        placeholder="Password"
+                        name="password"
+                        onChange={this.selecting_user_dates}
+                        required />
+                </div>
+                <div className="form-group">
+                    <button className="btn btn-primary">
+                        Access
+        </button>
+                </div>
+            </form>
+            <div className="form-group">
+                <MensajeError mensaje_error={this.state.mensaje_error} delete_error_message={this.delete_error_message} />
             </div>
-
+        </div>
         )
     }
 }
