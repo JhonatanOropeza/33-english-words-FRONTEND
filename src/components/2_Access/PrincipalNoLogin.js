@@ -24,7 +24,7 @@ export default class PrincipalNoLogin extends Component {
                 <div className="ToAccess-Video-3">
                     <Player loop autoPlay>
                         <ControlBar disableDefaultControls disableCompletely />
-                        <source src={linkVideo} type="video/mp4" />
+                        <source src={linkVideo} type="video/mp4"muted="true"/>
                     </Player>
                 </div>
             </div>
