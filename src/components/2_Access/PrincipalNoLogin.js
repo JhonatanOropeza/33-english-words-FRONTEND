@@ -5,7 +5,7 @@ import { Player, ControlBar } from 'video-react';
 //import Login from './login';
 //import Logup from './logup';
 
-const linkVideo = process.env.REACT_APP_VIDEO_FOR_LOG;
+//const linkVideo = process.env.REACT_APP_VIDEO_FOR_LOG;
 
 export default class PrincipalNoLogin extends Component {
     render() {
