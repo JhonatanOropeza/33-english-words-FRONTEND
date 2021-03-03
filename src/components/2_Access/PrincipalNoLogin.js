@@ -11,7 +11,7 @@ export default class PrincipalNoLogin extends Component {
     render() {
         return (
             <div className="ToAccess">
-
+                {/** 
                 <div className="ToAccess-Text-1">
                     <div className="ToAccess-Text-First">
                         {this.props.option === 0 && <First/>}
@@ -20,7 +20,7 @@ export default class PrincipalNoLogin extends Component {
                     </div>
                 </div>
                 <div className="ToAccess-Transparency-2"></div>
-
+                */}
                 <div className="ToAccess-Video-3">
                     <Player loop autoPlay muted>
                         <ControlBar disableDefaultControls disableCompletely />
