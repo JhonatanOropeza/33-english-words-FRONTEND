@@ -11,11 +11,11 @@ export default class Play extends Component {
     state = {
         datos: [], totales: [],
         colores: [
-            {color1: false, color2: false},
-            {color1: false, color2: false},
-            {color1: false, color2: false},
-            {color1: false, color2: false}
-        ],    
+            { color1: false, color2: false },
+            { color1: false, color2: false },
+            { color1: false, color2: false },
+            { color1: false, color2: false }
+        ],
         noHayDatoAMostrar: false,
         cargandoDatos: false
     }
@@ -25,7 +25,7 @@ export default class Play extends Component {
             this.setState({ cargandoDatos: true });
             const { data } = await axios.get(baseURL + '/words');
             this.setState({ datos: data.result });
-            this.setState({totales: data.totales });
+            this.setState({ totales: data.totales });
             this.setState({ cargandoDatos: false });
         } catch (error) {
             if (error.response &&
@@ -43,10 +43,10 @@ export default class Play extends Component {
             if (opc === 1) {
                 const { data } = await axios.get(baseURL + `/words/getOneRandomNoun/${this.state.datos[0]._id}`);
                 let datosAux = [...this.state.datos];
-                let dato = {...datosAux[0]};
+                let dato = { ...datosAux[0] };
                 dato = data;
                 datosAux[0] = dato;
-                this.setState({datos: datosAux});
+                this.setState({ datos: datosAux });
             } else if (opc === 2) {
                 await axios.get(baseURL + `/verb/${this.state.datos[1]._id}`);
             } else if (opc === 3) {
@@ -54,7 +54,7 @@ export default class Play extends Component {
             } else if (opc === 4) {
                 await axios.get(baseURL + `/other_word/${this.state.datos[3]._id}`);
             }
-            
+
             this.setState({ cargandoDatos: false });
         } catch (error) {
             this.setState({ cargandoDatos: false });
@@ -63,22 +63,22 @@ export default class Play extends Component {
     //Para invertir un colores
     change_color1 = (index) => {
         let coloresAux = [...this.state.colores];
-        let color = {...coloresAux[index]};
+        let color = { ...coloresAux[index] };
         color.color1 = !color.color1;
         coloresAux[index] = color;
-        this.setState({colores: coloresAux});
+        this.setState({ colores: coloresAux });
     }
-    change_color2 = (index) =>{
+    change_color2 = (index) => {
         let coloresAux = [...this.state.colores];
-        let color = {...coloresAux[index]};
+        let color = { ...coloresAux[index] };
         color.color2 = !color.color2;
         coloresAux[index] = color;
-        this.setState({colores: coloresAux});
+        this.setState({ colores: coloresAux });
     }
 
     componentDidMount() {
         this.get_word();
-    }   
+    }
 
     render() {
         const opcion = this.state.noHayDatoAMostrar;
@@ -109,28 +109,31 @@ export default class Play extends Component {
                             {
                                 this.state.datos.map((dato, index) => (
                                     <div className="card" key={index}>
+                                        {/** 1st row (titles) */}
                                         <div className="card-header text-center">
                                             <strong>
                                                 {index === 0 && 'Noun'}{index === 1 && 'Verb'}{index === 2 && 'Adjective'}{index === 3 && 'Other'}
                                             </strong>
                                         </div>
-                                        
 
-                                        <ColumWords 
+                                        {/** 2nd row (word, trak and meaning) */}
+                                        <ColumWords
                                             dato={dato}
                                             index={index}
                                             colores={this.state.colores[index]}
-                                            change_color1 = {this.change_color1}
-                                            change_color2 = {this.change_color2}
+                                            change_color1={this.change_color1}
+                                            change_color2={this.change_color2}
                                         />
 
-
+                                        {/** 3rd row (total nouns) */}
                                         <div className="card-footer text-center">
                                             <p className="p-0 m-0">
                                                 Total {index === 0 && 'nouns'}{index === 1 && 'verbs'}{index === 2 && 'adjectives'}{index === 3 && 'others'}
-                                                : {this.state.totales[index]} 
+                                                : {this.state.totales[index]}
                                             </p>
                                         </div>
+
+                                        {/** 4th row (boton "Add word") */}
                                         <div className="card-footer text-center">
                                             {(Object.keys(dato).length > 0) && (this.state.totales[index] > 0)
                                                 ?
@@ -140,7 +143,7 @@ export default class Play extends Component {
                                                     New Word
                                                 </button>
                                                 :
-                                                <div style={{height:'38px'}}></div>
+                                                <div style={{ height: '38px' }}></div>
                                             }
                                         </div>
                                     </div>

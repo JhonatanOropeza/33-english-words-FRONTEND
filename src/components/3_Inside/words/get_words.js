@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Pagination from "react-js-pagination";
 
 import RecursoNoExiste from '../../1_General/RecursoNoExiste';
+import Main from '../../1_General/Main';
 
 const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
@@ -153,13 +154,17 @@ export default class get_words extends Component {
             <>
                 { mostrarMensaje
                     ? (
-                        <div className="container pt-3">
-                            <RecursoNoExiste
-                                mensajeOne={`You haven't added words in this section yet`}
-                                mensajeTwo={'Add one'}
-                                link={'/new_word'}
-                            />
-                        </div>
+                        <>
+                            
+                            <Main verticalCenter>
+                                <RecursoNoExiste
+                                    mensajeOne={`You haven't added words in this section yet`}
+                                    mensajeTwo={'Add one'}
+                                    link={'/new_word'}
+                                />
+                            </Main>
+                        </>
+
                     ) : (
                         <div className="container">
                             <table className="table table-striped text-center mt-3">

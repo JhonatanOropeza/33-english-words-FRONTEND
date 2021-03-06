@@ -10,7 +10,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 import './components/1_General/loading.css'
 import './components/2_Access/welcome.css'
-import "../node_modules/video-react/dist/video-react.css";
 
 //3.- IMPORTING COMPONENTS
 import {

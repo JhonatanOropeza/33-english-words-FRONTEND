@@ -23,12 +23,14 @@ export default class ColumWord extends Component {
                         {/** 2.- Printing the track */}
                         <p><strong>Track: </strong></p>
                         <p
+                            className="rounded"
                             style={this.props.colores.color1 === false ? { background: 'black' } : { background: 'white' }}
                             onClick={() => this.props.change_color1(this.props.index)}
                         > {this.props.dato.track}</p>
                         {/** 3.- Printing the meaning */}
                         <p><strong>Meaning: </strong></p>
                         <p
+                            className="rounded"
                             style={this.props.colores.color2 === false ? { background: 'black' } : { background: 'white' }}
                             onClick={() => this.props.change_color2(this.props.index)}
                         > {this.props.dato.meaning}</p>
