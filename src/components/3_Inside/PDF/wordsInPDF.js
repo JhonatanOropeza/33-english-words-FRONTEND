@@ -32,7 +32,7 @@ export default class wordsInPDF extends Component {
         this.printKindOfWords();
     }
     async componentDidMount() {
-        //console.log(this.state)
+        console.log('Before to get this.state.info', this.state)
         try {
             const getting = await axios.get(baseURL + this.state.the_path);
             this.setState({ info: getting.data.result });
@@ -111,7 +111,8 @@ export default class wordsInPDF extends Component {
                 <Document
                     title="Remembre Words in English"
                     author="Jhonatan I Oropeza Mendoza"
-                    keywords="nouns, verbs, adjectives, other words">
+                    keywords="nouns, verbs, adjectives, other words"
+                    >
                     <Page style={styles.page} size="LETTER" title={"Remember Words in English" + this.state.the_path}>
                         <View style={styles.title}>
                             <Text>Remember Words in English</Text>

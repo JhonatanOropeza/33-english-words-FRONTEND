@@ -60,7 +60,6 @@ export default class get_words extends Component {
             //console.log(getting.data);
             //For a reason the backend returns a string with actual_page, but it´s converted with next line
             let actual_page1 = parseInt(getting.data.actual_page, 10);
-            console.log('Hola', getting.data.result);
             if (getting.data.result.length > 0) {
                 this.setState({
                     info: getting.data.result,
@@ -155,7 +154,7 @@ export default class get_words extends Component {
                 { mostrarMensaje
                     ? (
                         <>
-                            
+
                             <Main verticalCenter>
                                 <RecursoNoExiste
                                     mensajeOne={`You haven't added words in this section yet`}
@@ -167,6 +166,9 @@ export default class get_words extends Component {
 
                     ) : (
                         <div className="container">
+                            {/** ------------------------------*/}
+                            {/**Getting words */}
+                            {/** ------------------------------*/}
                             <table className="table table-striped text-center mt-3">
                                 <thead>
                                     <tr>
@@ -201,14 +203,19 @@ export default class get_words extends Component {
                                     ))}
                                 </tbody>
                             </table >
+                            {/** ------------------------------*/}
+                            {/**Getting buttom to get PDF */}
+                            {/** ------------------------------*/}
                             <div className="container mt-3">
                                 <div className="d-flex justify-content-center">
-                                    <Link className="btn btn-success" to="/PDF" onClick={this.onClickPDF}>
+                                    <Link to="/PDF" target="_blank" onClick={this.onClickPDF} className="btn btn-success">
                                         Get PDF
-                            </Link>
+                                    </Link>
                                 </div>
                             </div>
-                            {/**Insetin Pagination */}
+                            {/** ------------------------------*/}
+                            {/**Inseting Pagination */}
+                            {/** ------------------------------*/}
                             {
                                 this.state.total > 3 &&
                                 <div className="container mt-3">

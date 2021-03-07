@@ -68,8 +68,8 @@ export default class App extends Component {
     this.setState({ usuario: data.user })
     setToken(data.token);
     //console.log(this.state.usuario)//Showing credentials
-
   }
+  
   //3.2.- signoff
   signoff = () => {
     this.setState({ usuario: null });
