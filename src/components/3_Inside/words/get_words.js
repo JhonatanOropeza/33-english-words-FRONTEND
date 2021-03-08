@@ -60,7 +60,7 @@ export default class get_words extends Component {
             //console.log(getting.data);
             //For a reason the backend returns a string with actual_page, but it´s converted with next line
             let actual_page1 = parseInt(getting.data.actual_page, 10);
-            console.log('Hola', getting.data.result);
+            //console.log('get_words', getting.data)
             if (getting.data.result.length > 0) {
                 this.setState({
                     info: getting.data.result,
@@ -133,6 +133,7 @@ export default class get_words extends Component {
             );
         }
     }
+
     //Deleting word
     deleteWord = async (id) => {
         await axios.delete(baseURL + '/words/noun/' + id);
@@ -170,6 +171,9 @@ export default class get_words extends Component {
 
                     ) : (
                         <div className="container">
+                            {/** ------------------------------*/}
+                            {/**Getting words */}
+                            {/** ------------------------------*/}
                             <table className="table table-striped text-center mt-3">
                                 <thead>
                                     <tr>
@@ -204,6 +208,9 @@ export default class get_words extends Component {
                                     ))}
                                 </tbody>
                             </table >
+                            {/** ------------------------------*/}
+                            {/**Getting buttom to get PDF */}
+                            {/** ------------------------------*/}
                             <div className="container mt-3">
                                 <div className="d-flex justify-content-center">
                                     <Link className="btn btn-success" to="/PDF">
@@ -211,7 +218,9 @@ export default class get_words extends Component {
                                     </Link>
                                 </div>
                             </div>
-                            {/**Insetin Pagination */}
+                            {/** ------------------------------*/}
+                            {/**Inseting Pagination */}
+                            {/** ------------------------------*/}
                             {
                                 this.state.total > 3 &&
                                 <div className="container mt-3">
