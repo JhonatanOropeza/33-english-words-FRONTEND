@@ -60,6 +60,7 @@ export default class get_words extends Component {
             //console.log(getting.data);
             //For a reason the backend returns a string with actual_page, but it´s converted with next line
             let actual_page1 = parseInt(getting.data.actual_page, 10);
+            //console.log('get_words', getting.data)
             if (getting.data.result.length > 0) {
                 this.setState({
                     info: getting.data.result,
@@ -117,12 +118,14 @@ export default class get_words extends Component {
             );
         }
     }
+
     //Deleting word
     deleteWord = async (id) => {
         await axios.delete(baseURL + '/words/noun/' + id);
         this.getInfo();
     }
-    onClickPDF = () => {
+
+    onClickPDF = async () => {
         let frontEndPath = this.props.match.path;
         let backEndPath = undefined;
         if (frontEndPath === '/get_nouns') backEndPath = '/words/noun';
@@ -130,11 +133,13 @@ export default class get_words extends Component {
         if (frontEndPath === '/get_others') backEndPath = '/words/other_word';
         if (frontEndPath === '/get_adjectives') backEndPath = '/words/adjective';
         try {
-            this.props.wordSelectedForPDF(backEndPath);
+            //It's sent the path for the words showed and the words with their information
+            await this.props.wordSelectedForPDF(backEndPath, this.state.info);
         } catch (error) {
             console.log(error)
         }
     }
+
     handlePageChange(pageNumber) {
         //console.log(`active page is ${pageNumber}`);
         this.setState({ actual_page: pageNumber }, function () {

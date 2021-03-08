@@ -38,7 +38,9 @@ export default class App extends Component {
   state = {
     usuario: null,
     cargando_usuario: true,
-    pathWordsInPDF: undefined
+    //For the PDF, we use
+    pathWordsInPDF: undefined,
+    infoWordsInPDF: []
   };
   //2.- ComponentDidMount()
   componentDidMount() {
@@ -69,7 +71,7 @@ export default class App extends Component {
     setToken(data.token);
     //console.log(this.state.usuario)//Showing credentials
   }
-  
+
   //3.2.- signoff
   signoff = () => {
     this.setState({ usuario: null });
@@ -77,10 +79,9 @@ export default class App extends Component {
   }
 
   //3.- Funcione para mostrar PDF de acuerdo a la palabra solicitar
-  wordSelectedForPDF = (kind) => {
-    //console.log('App')
-    const pathWordsInPDF = kind;
-    this.setState({ pathWordsInPDF }, () => {
+  wordSelectedForPDF = (kind, info) => {
+    this.setState({ infoWordsInPDF: info });
+    this.setState({ pathWordsInPDF: kind }, () => {
       //console.log(this.state.pathWordsInPDF)
     });
   }
@@ -103,12 +104,20 @@ export default class App extends Component {
             {/** A)Si hay usuario, mostramos perfil */}
             {/** B)Si NO hay usuario, mostramos login */}
             {this.state.usuario ? (
-              <Principal signoff={this.signoff} usuario={this.usuario} wordSelectedForPDF={this.wordSelectedForPDF} pathWordsInPDF={this.state.pathWordsInPDF} userForPDF={this.state.usuario} />
+              <Principal
+                signoff={this.signoff}
+                usuario={this.usuario}
+                //States for PDF
+                infoWordsInPDF={this.state.infoWordsInPDF}
+                wordSelectedForPDF={this.wordSelectedForPDF}
+                pathWordsInPDF={this.state.pathWordsInPDF}
+                userForPDF={this.state.usuario}
+              />
             ) : (
-                <ToAccess
-                  signin={this.signin}
-                />
-              )}
+              <ToAccess
+                signin={this.signin}
+              />
+            )}
             {/**<div>{JSON.stringify(this.state.usuario)}</div>*/}
           </Router>
         </>
@@ -128,8 +137,8 @@ class ToAccess extends Component {
     return (
       <Switch>
         <Route path="/signin" render={() => <PrincipalNoLogin option={1} signin={this.props.signin} />} />
-        <Route path="/signup" render={() => <PrincipalNoLogin option={2}/>} />
-        <Route render={() => <PrincipalNoLogin option={0}/>} default />
+        <Route path="/signup" render={() => <PrincipalNoLogin option={2} />} />
+        <Route render={() => <PrincipalNoLogin option={0} />} default />
       </Switch>
     )
   }
@@ -149,6 +158,7 @@ class Principal extends Component {
       <Router>
         <PDFLink
           pathWordsInPDF={this.props.pathWordsInPDF}
+          infoWordsInPDF={this.props.infoWordsInPDF}
           userForPDF={this.props.userForPDF}
         />
         <Navigation signoff={this.props.signoff} />
@@ -174,12 +184,14 @@ class Principal extends Component {
 
 class PDFLink extends Component {
   render() {
+    console.log('PDFLink', this.props.infoWordsInPDF, this.props.pathWordsInPDF, this.props.userForPDF);
     return (
       <Switch>
         {/* Showing the pdf, in this case it´s used only one route because through the props, we decided th kind of words to use*/}
         <Route path="/PDF" render={(props) =>
           <WordsInPDF
             {...props}
+            infoWordsInPDF={this.props.infoWordsInPDF}
             pathWordsInPDF={this.props.pathWordsInPDF}
             userForPDF={this.props.userForPDF} />}
         />

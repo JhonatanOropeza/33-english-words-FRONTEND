@@ -1,25 +1,27 @@
 // 1.- IMPORTING MODULES
 import React, { Component } from 'react';
 import { PDFViewer } from '@react-pdf/renderer';
-import axios from 'axios'
+//import axios from 'axios'
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 //2.- IMPORTING OTHER COMPONENTS
 
 //3.- IMPORTING STYLES CSS
 
-const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
+//const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
 export default class wordsInPDF extends Component {
     constructor(props) {
+        console.log('wordsInPDF',props)
         super(props);
         this.state = {
-            info: [],//Here we´ll load the backend´s answer
-            //the_path: "/words/noun",
+            info: this.props.infoWordsInPDF,
+            //the_path: "/words/noun" (example),
             the_path: this.props.pathWordsInPDF, //Here we'll set the backend´s URL to make the request depending of the king of word
             user: this.props.userForPDF.user,
             kindOfWord: undefined
         };
     }
+
     printKindOfWords() {
         let path = this.state.the_path;
         if (path === "/words/noun") this.setState({ kindOfWord: "Nouns" });
@@ -27,20 +29,22 @@ export default class wordsInPDF extends Component {
         if (path === "/words/adjective") this.setState({ kindOfWord: "Adjectives" });
         if (path === "/words/other_word") this.setState({ kindOfWord: "Other Words" });
     }
+
     UNSAFE_componentWillMount() {
         //console.log(this.props);
         this.printKindOfWords();
     }
-    async componentDidMount() {
-        console.log('Before to get this.state.info', this.state)
+
+/*     async componentDidMount() {
         try {
             const getting = await axios.get(baseURL + this.state.the_path);
-            this.setState({ info: getting.data.result });
-            //console.log(this.state.info);
+            console.log('DidMount', getting);
+            //this.setState({ info: getting.data.result });
         } catch (error) {
             console.log(error)
         }
-    }
+    } */
+
     render() {
         const styles = StyleSheet.create({
             viewer: {
