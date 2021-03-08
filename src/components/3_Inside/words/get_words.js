@@ -80,9 +80,24 @@ export default class get_words extends Component {
         }
     }
 
+    onClickPDF = () => {
+        let frontEndPath = this.props.match.path;
+        let backEndPath = undefined;
+        if (frontEndPath === '/get_nouns') backEndPath = '/words/noun';
+        if (frontEndPath === '/get_verbs') backEndPath = '/words/verb';
+        if (frontEndPath === '/get_others') backEndPath = '/words/other_word';
+        if (frontEndPath === '/get_adjectives') backEndPath = '/words/adjective';
+        try {
+            this.props.wordSelectedForPDF(backEndPath);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     componentDidMount() {
         //console.log(this.state)
         this.getInfo();
+        this.onClickPDF();
     }
     //--------------------------------------------------
     //--------------- 2.- UPGRATE ---------------------
@@ -123,19 +138,7 @@ export default class get_words extends Component {
         await axios.delete(baseURL + '/words/noun/' + id);
         this.getInfo();
     }
-    onClickPDF = () => {
-        let frontEndPath = this.props.match.path;
-        let backEndPath = undefined;
-        if (frontEndPath === '/get_nouns') backEndPath = '/words/noun';
-        if (frontEndPath === '/get_verbs') backEndPath = '/words/verb';
-        if (frontEndPath === '/get_others') backEndPath = '/words/other_word';
-        if (frontEndPath === '/get_adjectives') backEndPath = '/words/adjective';
-        try {
-            this.props.wordSelectedForPDF(backEndPath);
-        } catch (error) {
-            console.log(error)
-        }
-    }
+
     handlePageChange(pageNumber) {
         //console.log(`active page is ${pageNumber}`);
         this.setState({ actual_page: pageNumber }, function () {
@@ -155,7 +158,7 @@ export default class get_words extends Component {
                 { mostrarMensaje
                     ? (
                         <>
-                            
+
                             <Main verticalCenter>
                                 <RecursoNoExiste
                                     mensajeOne={`You haven't added words in this section yet`}
@@ -203,9 +206,9 @@ export default class get_words extends Component {
                             </table >
                             <div className="container mt-3">
                                 <div className="d-flex justify-content-center">
-                                    <Link className="btn btn-success" to="/PDF" onClick={this.onClickPDF}>
+                                    <Link className="btn btn-success" to="/PDF">
                                         Get PDF
-                            </Link>
+                                    </Link>
                                 </div>
                             </div>
                             {/**Insetin Pagination */}

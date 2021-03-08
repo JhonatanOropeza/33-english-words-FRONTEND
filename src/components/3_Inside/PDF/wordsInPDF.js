@@ -12,6 +12,7 @@ const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 export default class wordsInPDF extends Component {
     constructor(props) {
         super(props);
+        console.log('props',props)
         this.state = {
             info: [],//Here we´ll load the backend´s answer
             //the_path: "/words/noun",
@@ -34,6 +35,7 @@ export default class wordsInPDF extends Component {
     async componentDidMount() {
         //console.log(this.state)
         try {
+            console.log(baseURL + this.state.the_path)
             const getting = await axios.get(baseURL + this.state.the_path);
             this.setState({ info: getting.data.result });
             //console.log(this.state.info);
