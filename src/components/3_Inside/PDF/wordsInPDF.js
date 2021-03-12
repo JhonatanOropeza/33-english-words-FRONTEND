@@ -1,21 +1,20 @@
 // 1.- IMPORTING MODULES
 import React, { Component } from 'react';
 import { PDFViewer } from '@react-pdf/renderer';
-//import axios from 'axios'
+import axios from 'axios'
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 //2.- IMPORTING OTHER COMPONENTS
 
 //3.- IMPORTING STYLES CSS
 
-//const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
+const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
 export default class wordsInPDF extends Component {
     constructor(props) {
         console.log('wordsInPDF',props)
         super(props);
-        console.log('props',props)
         this.state = {
-            info: this.props.infoWordsInPDF,
+            info: [],
             //the_path: "/words/noun" (example),
             the_path: this.props.pathWordsInPDF, //Here we'll set the backend´s URL to make the request depending of the king of word
             user: this.props.userForPDF.user,
@@ -36,16 +35,16 @@ export default class wordsInPDF extends Component {
         this.printKindOfWords();
     }
 
-/*     async componentDidMount() {
+    async componentDidMount() {
         try {
             console.log(baseURL + this.state.the_path)
             const getting = await axios.get(baseURL + this.state.the_path);
             console.log('DidMount', getting);
-            //this.setState({ info: getting.data.result });
+            this.setState({ info: getting.data.result });
         } catch (error) {
             console.log(error)
         }
-    } */
+    }
 
     render() {
         const styles = StyleSheet.create({
