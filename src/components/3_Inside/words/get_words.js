@@ -66,7 +66,8 @@ export default class get_words extends Component {
                     info: getting.data.result,
                     actual_page: actual_page1,
                     itemsPerPage: getting.data.itemsPerPage,
-                    total: getting.data.total
+                    total: getting.data.total,
+                    mensajeSinElementos: false
                 }, function () {
                     //console.log(this.state.actual_page);
                     //console.log(this.state.itemsPerPage)
@@ -95,7 +96,6 @@ export default class get_words extends Component {
     }
 
     componentDidMount() {
-        //console.log(this.state)
         this.getInfo();
         this.onClickPDF();
     }
@@ -159,7 +159,6 @@ export default class get_words extends Component {
                 { mostrarMensaje
                     ? (
                         <>
-
                             <Main verticalCenter>
                                 <RecursoNoExiste
                                     mensajeOne={`You haven't added words in this section yet`}
@@ -168,7 +167,6 @@ export default class get_words extends Component {
                                 />
                             </Main>
                         </>
-
                     ) : (
                         <div className="container">
                             {/** ------------------------------*/}

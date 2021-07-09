@@ -6,9 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 
 export default class mensajeError extends Component {
-  componentDidMount() {
-    //console.log(this.props)
-  }
 
   render() {
     if (!this.props.mensaje_error) {

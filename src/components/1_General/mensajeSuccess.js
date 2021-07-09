@@ -6,9 +6,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 
 export default class mensajeSuccess extends Component {
-  componentDidMount() {
-    //console.log(this.props)
-  }
 
   render() {
     if (!this.props.mensaje_success) {

@@ -20,10 +20,6 @@ export default class pagination extends Component {
         this.setState({ activePage: pageNumber });
     }
 
-    componentDidMount(){
-        console.log(this.props)
-    }
-
     render() {
         return (
             <div>

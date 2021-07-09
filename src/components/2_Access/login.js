@@ -8,9 +8,6 @@ export default class login extends Component {
         password: '',
         mensaje_error: ''
     }
-    componentDidMount() {
-        //console.log('Here was me');
-    }
     onSubmit = async (e) => {
         e.preventDefault();
         //Preapring dates because they will be processed

@@ -184,7 +184,7 @@ class Principal extends Component {
 
 class PDFLink extends Component {
   render() {
-    console.log('PDFLink', this.props.infoWordsInPDF, this.props.pathWordsInPDF, this.props.userForPDF);
+    //console.log('PDFLink', this.props.infoWordsInPDF, this.props.pathWordsInPDF, this.props.userForPDF);
     return (
       <Switch>
         {/* Showing the pdf, in this case it´s used only one route because through the props, we decided th kind of words to use*/}

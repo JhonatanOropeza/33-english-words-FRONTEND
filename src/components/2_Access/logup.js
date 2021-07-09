@@ -15,9 +15,7 @@ export default class logup extends Component {
         mensaje_error: null,
         mensaje_success: null
     }
-    componentDidMount() {
-        //console.log('Here was me')
-    }
+    
     onSubmit = async (e) => {
         e.preventDefault();
         //To desappear success, mensaje_success= null

@@ -17,9 +17,7 @@ export default class Insert_word extends Component {
             selected: null,
           }
     }
-    componentDidMount(){
-        //console.log('Here was me')
-    }
+    
     //Evento caundo se le de click al botón del formulario
     onSubmit = async (e) => {
         e.preventDefault();

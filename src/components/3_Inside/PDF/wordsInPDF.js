@@ -39,7 +39,6 @@ export default class wordsInPDF extends Component {
         try {
             console.log(baseURL + this.state.the_path)
             const getting = await axios.get(baseURL + this.state.the_path);
-            console.log('DidMount', getting);
             this.setState({ info: getting.data.result });
         } catch (error) {
             console.log(error)
