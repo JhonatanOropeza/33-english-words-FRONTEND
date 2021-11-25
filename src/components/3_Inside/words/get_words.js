@@ -6,6 +6,9 @@ import Pagination from "react-js-pagination";
 import RecursoNoExiste from '../../1_General/RecursoNoExiste';
 import Main from '../../1_General/Main';
 
+//Importar funiones auxiliares
+import { deleteWordAuxiliar } from '../../../helpers/3_Inside/words';
+
 const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
 export default class get_words extends Component {
@@ -71,7 +74,6 @@ export default class get_words extends Component {
                 }, function () {
                     //console.log(this.state.actual_page);
                     //console.log(this.state.itemsPerPage)
-                    //console.log(this.state.total);
                 });
             } else {
                 this.setState({ mensajeSinElementos: true });
@@ -135,8 +137,11 @@ export default class get_words extends Component {
     }
 
     //Deleting word
-    deleteWord = async (id) => {
-        await axios.delete(baseURL + '/words/noun/' + id);
+    deleteWord = async (urlToDelete, id) => {
+        //1.- Deleting the word fron the db in backend
+        //This function is in helpers folder
+        await deleteWordAuxiliar(urlToDelete, id, this.state.info);
+        //2.- Updating the state
         this.getInfo();
     }
 
@@ -145,7 +150,6 @@ export default class get_words extends Component {
         this.setState({ actual_page: pageNumber }, function () {
             this.getInfo();
         });
-
     }
     //--------------------------------------------------
     //--------------- 2.- UPGRATE ---------------------
@@ -156,7 +160,7 @@ export default class get_words extends Component {
         const mostrarMensaje = this.state.mensajeSinElementos
         return (
             <>
-                { mostrarMensaje
+                {mostrarMensaje
                     ? (
                         <>
                             <Main verticalCenter>
@@ -193,19 +197,24 @@ export default class get_words extends Component {
                                             <td>{inf.meaning}</td>
                                             <td>
                                                 <div className="btn-group">
-                                                    <Link className="btn btn-info" to={'/edit_' + this.state.urlToEdit + '/' + inf._id}>Edit</Link>
+                                                    <Link
+                                                        className="btn btn-info" to={'/edit_' + this.state.urlToEdit + '/' + inf._id}
+                                                    >Edit
+                                                    </Link>
                                                     <button
                                                         className="btn btn-danger"
-                                                        onClick={() => this.deleteWord(inf._id)}>
-                                                        Delete
-                                        </button>
+                                                        onClick={() => this.deleteWord(this.state.urlToEdit, inf._id)}
+                                                    >Delete
+                                                    </button>
                                                 </div>
+                                                {/**<div>{JSON.stringify(inf)}</div> */}
                                             </td>
                                         </tr>
-
+                                        
                                     ))}
                                 </tbody>
                             </table >
+                            
                             {/** ------------------------------*/}
                             {/**Getting buttom to get PDF */}
                             {/** ------------------------------*/}

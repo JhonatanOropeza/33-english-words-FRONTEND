@@ -74,11 +74,13 @@ onSubmit = async (e) => {
         await axios.put(baseURL + '/words/other_word/' + this.state._id, wordChanged);
         window.alert("The other word was modified");
     } else {
-        window.alert("Word cannot be stored");
+        window.alert("Word cannot be modified");
     }
     //Refrescando la página
     const kindOfWOrd = this.state.type;
-    window.location.href = '/get_' + kindOfWOrd;
+    //In the next line we add 's' because in the props it arrives singular and for the url we add 
+    // need it un plural ex: localhost:3000/get_nouns
+    window.location.href = '/get_' + kindOfWOrd + 's';
 
 }
 
