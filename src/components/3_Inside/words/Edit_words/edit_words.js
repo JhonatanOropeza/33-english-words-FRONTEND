@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Navigation from '../../1_General/Navigation';
+import Navigation from '../../../1_General/Navigation';
+import SpinnerButton from '../Insert_word/SpinnerButton';
 
 const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
@@ -14,8 +15,9 @@ export default class edit_words extends Component {
             meaning: '',
             type: '',
             _id: '',
-            path: '', //To complete the url to make the get petition to the backend
-        };
+            path: '', //To complete the url to make the get petition to the backend,
+            editingWord: false
+        }
     }
 
     UNSAFE_componentWillMount() {
@@ -55,6 +57,11 @@ export default class edit_words extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
+        //For the spinner in the button
+        this.setState({ editingWord: true });
+        if (this.state.editingWord) {
+            return;
+        }
         //Preparando datos para almacenar
         const wordChanged = {
             word: this.state.word,
@@ -62,20 +69,27 @@ export default class edit_words extends Component {
             meaning: this.state.meaning,
             type: this.state.type
         }
-        //Saving the new word into the correct collection 
-        if (this.state.type === 'noun') {
-            await axios.put(baseURL + '/words/noun/' + this.state._id, wordChanged);
-            window.alert("The noun was modified");
-        } else if (this.state.type === 'verb') {
-            await axios.put(baseURL + '/words/verb/' + this.state._id, wordChanged);
-            window.alert("The verb was modified");
-        } else if (this.state.type === 'adjective') {
-            await axios.put(baseURL + '/words/adjective/' + this.state._id, wordChanged);
-            window.alert("The adjective was modified");
-        } else if (this.state.type === 'other') {
-            await axios.put(baseURL + '/words/other_word/' + this.state._id, wordChanged);
-            window.alert("The other word was modified");
-        } else {
+        try {
+            //Saving the new word into the correct collection 
+            if (this.state.type === 'noun') {
+                await axios.put(baseURL + '/words/noun/' + this.state._id, wordChanged);
+                window.alert("The noun was modified");
+            }
+            if(this.state.type === 'verb') {
+                await axios.put(baseURL + '/words/verb/' + this.state._id, wordChanged);
+                window.alert("The verb was modified");
+            }
+            if(this.state.type === 'adjective') {
+                await axios.put(baseURL + '/words/adjective/' + this.state._id, wordChanged);
+                window.alert("The adjective was modified");
+            }
+            if(this.state.type === 'other') {
+                await axios.put(baseURL + '/words/other_word/' + this.state._id, wordChanged);
+                window.alert("The other word was modified");
+            }
+            this.setState({ editingWord: false });
+        } catch (error) {
+            this.setState({ editingWord: false });
             window.alert("Word cannot be modified");
         }
         //Refrescando la página
@@ -83,7 +97,6 @@ export default class edit_words extends Component {
         //In the next line we add 's' because in the props it arrives singular and for the url we add 
         // need it un plural ex: localhost:3000/get_nouns
         window.location.href = '/get_' + kindOfWOrd + 's';
-
     }
 
     selecting_user_dates = (e) => {
@@ -140,7 +153,7 @@ export default class edit_words extends Component {
                                     {/* Bottom*/}
                                     <div className="form-group">
                                         <button className="btn btn-primary">
-                                            Save
+                                            <SpinnerButton storingWord={this.state.editingWord} mensajeBoton={'Edit'} />
                                         </button>
                                     </div>
                                 </form>

@@ -3,12 +3,13 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Pagination from "react-js-pagination";
 
-import RecursoNoExiste from '../../1_General/RecursoNoExiste';
-import Main from '../../1_General/Main';
-import Navigation from '../../1_General/Navigation';
+import RecursoNoExiste from '../../../1_General/RecursoNoExiste';
+import Main from '../../../1_General/Main';
+import Navigation from '../../../1_General/Navigation';
+import SpinnerButtonDeleting from './SpinnerButtonDeleting';
 
 //Importar funiones auxiliares
-import { deleteWordAuxiliar } from '../../../helpers/3_Inside/words';
+import { deleteWordAuxiliar } from '../../../../helpers/3_Inside/words';
 
 const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
@@ -26,6 +27,8 @@ export default class get_words extends Component {
             total: 0,
             urlToEdit: undefined,
             mensajeSinElementos: false,
+            deletingWord: false,
+            idDeletingWord: undefined
         };
     }
 
@@ -139,10 +142,27 @@ export default class get_words extends Component {
 
     //Deleting word
     deleteWord = async (urlToDelete, id) => {
+        //For the spinner in the button
+        console.log('id:' + id + 'os')
+        this.setState({
+            deletingWord: true,
+            idDeletingWord: id
+        });
+
+        if (this.state.deletingWord) {
+            return;
+        }
         //1.- Deleting the word fron the db in backend
         //This function is in helpers folder
-        await deleteWordAuxiliar(urlToDelete, id, this.state.info);
+        const eliminationResult = await deleteWordAuxiliar(urlToDelete, id, this.state.info);
+        if (eliminationResult === false) {
+            window.alert("The word could not be removed");
+        } else {
+        }
         //2.- Updating the state
+        this.setState({
+            deletingWord: false
+        });
         this.getInfo();
     }
 
@@ -206,17 +226,23 @@ export default class get_words extends Component {
                                                     <button
                                                         className="btn btn-danger"
                                                         onClick={() => this.deleteWord(this.state.urlToEdit, inf._id)}
-                                                    >Delete
+                                                    >
+                                                        <SpinnerButtonDeleting
+                                                            deletingWord={this.state.deletingWord}
+                                                            idDeletingWord={this.state.idDeletingWord}
+                                                            idActual={inf._id}
+                                                        />
+                                                        Delete
                                                     </button>
                                                 </div>
                                                 {/**<div>{JSON.stringify(inf)}</div> */}
                                             </td>
                                         </tr>
-                                        
+
                                     ))}
                                 </tbody>
                             </table >
-                            
+
                             {/** ------------------------------*/}
                             {/**Getting buttom to get PDF */}
                             {/** ------------------------------*/}

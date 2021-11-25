@@ -23,10 +23,10 @@ import Loading from './components/1_General/Loading'
 //import Mensaje_error from './components/mensaje_error'
 
 // IMPORTING COMPONENRS FOR HOME COMPONENT
-import InsertWord from './components/3_Inside/words/Insert_word'
+import InsertWord from './components/3_Inside/words/Insert_word/Insert_word'
 import Play from './components/3_Inside/Play/Play'
-import GetWords from './components/3_Inside/words/get_words'
-import EditWords from './components/3_Inside/words/edit_words'
+import GetWords from './components/3_Inside/words/Get_words/get_words'
+import EditWords from './components/3_Inside/words/Edit_words/edit_words'
 import WordsInPDF from './components/3_Inside/PDF/wordsInPDF'
 
 gettingTokenFromLocalStorage();//and loading the token in the header as bearer

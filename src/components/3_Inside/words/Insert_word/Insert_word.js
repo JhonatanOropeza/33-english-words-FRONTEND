@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import Navigation from '../../1_General/Navigation';
+import Navigation from '../../../1_General/Navigation';
+import SpinnerButton from './SpinnerButton';
 
 const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
@@ -17,12 +18,18 @@ export default class Insert_word extends Component {
             c3: false,
             c4: false,
             selected: null,
-        }
+        },
+        storingWord: false
     }
 
     //Evento caundo se le de click al botón del formulario
     onSubmit = async (e) => {
         e.preventDefault();
+        //For the spinner in the button
+        this.setState({ storingWord: true });
+        if (this.state.storingWord) {
+            return;
+        }
         //Cambiando el estado de type
         if (this.state.checkboxes.c1 === true) {
             this.state.type = 'noun';
@@ -45,17 +52,22 @@ export default class Insert_word extends Component {
             if (this.state.type === 'noun') {
                 await axios.post(baseURL + '/words/noun', newWord);
                 window.alert("The noun was added");
-            } if (this.state.type === 'verb') {
+            } 
+            if (this.state.type === 'verb') {
                 await axios.post(baseURL + '/words/verb', newWord);
                 window.alert("The verb was added");
-            } if (this.state.type === 'adjective') {
+            } 
+            if (this.state.type === 'adjective') {
                 await axios.post(baseURL + '/words/adjective', newWord);
                 window.alert("The adjective was added");
-            } if (this.state.type === 'other') {
+            } 
+            if (this.state.type === 'other') {
                 await axios.post(baseURL + '/words/other_word', newWord);
                 window.alert("The other word was added");
             }
+            this.setState({ storingWord: false });
         } catch (error) {
+            this.setState({ storingWord: false });
             window.alert("Word cannot be stored");
         }
         //Refrescando la página
@@ -88,7 +100,7 @@ export default class Insert_word extends Component {
     render() {
         return (
             <>
-            <Navigation signoff={this.props.signoff} />
+                <Navigation signoff={this.props.signoff} />
                 <div className="container">
                     <div className="container mt-3">
                         <div className="col-md-6 offset-md-3">
@@ -166,9 +178,7 @@ export default class Insert_word extends Component {
                                     </div>
                                     {/* Bottom*/}
                                     <div className="form-group">
-                                        <button className="btn btn-primary">
-                                            Save
-                                        </button>
+                                        <SpinnerButton storingWord={this.state.storingWord} mensajeBoton={'Saving'}/>
                                     </div>
                                 </form>
 
@@ -180,3 +190,4 @@ export default class Insert_word extends Component {
         )
     }
 }
+
