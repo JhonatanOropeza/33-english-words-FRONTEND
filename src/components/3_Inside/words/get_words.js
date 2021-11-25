@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 
 import RecursoNoExiste from '../../1_General/RecursoNoExiste';
 import Main from '../../1_General/Main';
+import Navigation from '../../1_General/Navigation';
 
 //Importar funiones auxiliares
 import { deleteWordAuxiliar } from '../../../helpers/3_Inside/words';
@@ -160,6 +161,7 @@ export default class get_words extends Component {
         const mostrarMensaje = this.state.mensajeSinElementos
         return (
             <>
+                <Navigation signoff={this.props.signoff} />
                 {mostrarMensaje
                     ? (
                         <>

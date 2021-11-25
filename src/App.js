@@ -23,7 +23,6 @@ import Loading from './components/1_General/Loading'
 //import Mensaje_error from './components/mensaje_error'
 
 // IMPORTING COMPONENRS FOR HOME COMPONENT
-import Navigation from './components/1_General/Navigation';
 import InsertWord from './components/3_Inside/words/Insert_word'
 import Play from './components/3_Inside/Play/Play'
 import GetWords from './components/3_Inside/words/get_words'
@@ -156,46 +155,30 @@ class Principal extends Component {
     // 2.- this.prps.pathWordInPDF (used to send the state with the kind of word selected for show in the PDF)
     return (
       <Router>
-        <PDFLink
-          pathWordsInPDF={this.props.pathWordsInPDF}
-          infoWordsInPDF={this.props.infoWordsInPDF}
-          userForPDF={this.props.userForPDF}
-        />
-        <Navigation signoff={this.props.signoff} />
         <Switch>
-          <Route path="/new_word" render={() => <InsertWord />} />
+          <Route path="/PDF" render={(props) =>
+            <WordsInPDF
+              {...props}
+              infoWordsInPDF={this.props.infoWordsInPDF}
+              pathWordsInPDF={this.props.pathWordsInPDF}
+              userForPDF={this.props.userForPDF} />}
+          />
+          <Route path="/new_word" render={(props) => <InsertWord {...props} signoff={this.props.signoff}/>} />
           {/* Showing all the words by its type */}
-          <Route path="/get_nouns" render={(props) => <GetWords {...props} wordSelectedForPDF={this.props.wordSelectedForPDF} />} />
-          <Route path="/get_verbs" render={(props) => <GetWords {...props} wordSelectedForPDF={this.props.wordSelectedForPDF} />} />
-          <Route path="/get_adjectives" render={(props) => <GetWords {...props} wordSelectedForPDF={this.props.wordSelectedForPDF} />} />
-          <Route path="/get_others" render={(props) => <GetWords {...props} wordSelectedForPDF={this.props.wordSelectedForPDF} />} />
+          <Route path="/get_nouns" render={(props) => <GetWords {...props} wordSelectedForPDF={this.props.wordSelectedForPDF} signoff={this.props.signoff}/>} />
+          <Route path="/get_verbs" render={(props) => <GetWords {...props} wordSelectedForPDF={this.props.wordSelectedForPDF} signoff={this.props.signoff}/>} />
+          <Route path="/get_adjectives" render={(props) => <GetWords {...props} wordSelectedForPDF={this.props.wordSelectedForPDF} signoff={this.props.signoff}/>} />
+          <Route path="/get_others" render={(props) => <GetWords {...props} wordSelectedForPDF={this.props.wordSelectedForPDF} signoff={this.props.signoff}/>} />
           {/* Editing the word depending of its id*/}
-          <Route path="/edit_noun/:id" render={(props) => <EditWords {...props} />} />
-          <Route path="/edit_verb/:id" render={(props) => <EditWords {...props} />} />
-          <Route path="/edit_adjective/:id" render={(props) => <EditWords {...props} />} />
-          <Route path="/edit_other_word/:id" render={(props) => <EditWords {...props} />} />
+          <Route path="/edit_noun/:id" render={(props) => <EditWords {...props} signoff={this.props.signoff}/>} />
+          <Route path="/edit_verb/:id" render={(props) => <EditWords {...props} signoff={this.props.signoff}/>} />
+          <Route path="/edit_adjective/:id" render={(props) => <EditWords {...props} signoff={this.props.signoff}/>} />
+          <Route path="/edit_other_word/:id" render={(props) => <EditWords {...props} signoff={this.props.signoff}/>} />
           {/* Principal and default route*/}
-          <Route path="/" render={() => <Play />} default />
+          <Route path="/" render={(props) => <Play {...props} signoff={this.props.signoff}/>} default />
         </Switch>
       </Router>
     );
   }
 }
 
-class PDFLink extends Component {
-  render() {
-    //console.log('PDFLink', this.props.infoWordsInPDF, this.props.pathWordsInPDF, this.props.userForPDF);
-    return (
-      <Switch>
-        {/* Showing the pdf, in this case it´s used only one route because through the props, we decided th kind of words to use*/}
-        <Route path="/PDF" render={(props) =>
-          <WordsInPDF
-            {...props}
-            infoWordsInPDF={this.props.infoWordsInPDF}
-            pathWordsInPDF={this.props.pathWordsInPDF}
-            userForPDF={this.props.userForPDF} />}
-        />
-      </Switch>
-    );
-  }
-}

@@ -4,6 +4,7 @@ import axios from 'axios'
 import RecursoNoExiste from '../../1_General/RecursoNoExiste';
 import Main from '../../1_General/Main';
 import ColumWords from './ColumWord';
+import Navigation from '../../1_General/Navigation';
 
 const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
@@ -86,6 +87,8 @@ export default class Play extends Component {
         if (opcion) {
             return (
                 <>
+                    <Navigation signoff={this.props.signoff} />
+
                     <Main verticalCenter>
                         <RecursoNoExiste
                             mensajeOne={'You haven´t stored words yet'}
@@ -93,66 +96,68 @@ export default class Play extends Component {
                             link={'new_word'}
                         />
                     </Main>
-
                 </>
             );
         }
         return (
-            <Main>
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <h3>Time to play</h3>
-                    </div>
-                    <div className="row">
-                        <div className="card-group col">
-                            {/** Printing col by col) */}
-                            {
-                                this.state.datos.map((dato, index) => (
-                                    <div className="card" key={index}>
-                                        {/** 1st row (titles) */}
-                                        <div className="card-header text-center">
-                                            <strong>
-                                                {index === 0 && 'Noun'}{index === 1 && 'Verb'}{index === 2 && 'Adjective'}{index === 3 && 'Other'}
-                                            </strong>
-                                        </div>
+            <>
+                <Navigation signoff={this.props.signoff} />
+                <Main>
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <h3>Time to play</h3>
+                        </div>
+                        <div className="row">
+                            <div className="card-group col">
+                                {/** Printing col by col) */}
+                                {
+                                    this.state.datos.map((dato, index) => (
+                                        <div className="card" key={index}>
+                                            {/** 1st row (titles) */}
+                                            <div className="card-header text-center">
+                                                <strong>
+                                                    {index === 0 && 'Noun'}{index === 1 && 'Verb'}{index === 2 && 'Adjective'}{index === 3 && 'Other'}
+                                                </strong>
+                                            </div>
 
-                                        {/** 2nd row (word, trak and meaning) */}
-                                        <ColumWords
-                                            dato={dato}
-                                            index={index}
-                                            colores={this.state.colores[index]}
-                                            change_color1={this.change_color1}
-                                            change_color2={this.change_color2}
-                                        />
+                                            {/** 2nd row (word, trak and meaning) */}
+                                            <ColumWords
+                                                dato={dato}
+                                                index={index}
+                                                colores={this.state.colores[index]}
+                                                change_color1={this.change_color1}
+                                                change_color2={this.change_color2}
+                                            />
 
-                                        {/** 3rd row (total nouns) */}
-                                        <div className="card-footer text-center">
-                                            <p className="p-0 m-0">
-                                                Total {index === 0 && 'nouns'}{index === 1 && 'verbs'}{index === 2 && 'adjectives'}{index === 3 && 'others'}
-                                                : {this.state.totales[index]}
-                                            </p>
-                                        </div>
+                                            {/** 3rd row (total nouns) */}
+                                            <div className="card-footer text-center">
+                                                <p className="p-0 m-0">
+                                                    Total {index === 0 && 'nouns'}{index === 1 && 'verbs'}{index === 2 && 'adjectives'}{index === 3 && 'others'}
+                                                    : {this.state.totales[index]}
+                                                </p>
+                                            </div>
 
-                                        {/** 4th row (boton "Add word") */}
-                                        <div className="card-footer text-center">
-                                            {(Object.keys(dato).length > 0) && (this.state.totales[index] > 0)
-                                                ?
-                                                <button
-                                                    className="btn btn-warning"
-                                                    onClick={() => this.getOneWord(index + 1)}>
-                                                    New Word
-                                                </button>
-                                                :
-                                                <div style={{ height: '38px' }}></div>
-                                            }
+                                            {/** 4th row (boton "Add word") */}
+                                            <div className="card-footer text-center">
+                                                {(Object.keys(dato).length > 0) && (this.state.totales[index] > 0)
+                                                    ?
+                                                    <button
+                                                        className="btn btn-warning"
+                                                        onClick={() => this.getOneWord(index + 1)}>
+                                                        New Word
+                                                    </button>
+                                                    :
+                                                    <div style={{ height: '38px' }}></div>
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                ))
-                            }
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-            </Main >
+                </Main >
+            </>
         );
     }
 }

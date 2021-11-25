@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import Navigation from '../../1_General/Navigation';
+
 const baseURL = process.env.REACT_APP_RUTA_PRINCIPAL;
 
 export default class Insert_word extends Component {
@@ -86,6 +88,7 @@ export default class Insert_word extends Component {
     render() {
         return (
             <>
+            <Navigation signoff={this.props.signoff} />
                 <div className="container">
                     <div className="container mt-3">
                         <div className="col-md-6 offset-md-3">
