@@ -7,6 +7,7 @@ import RecursoNoExiste from '../../../1_General/RecursoNoExiste';
 import Main from '../../../1_General/Main';
 import Navigation from '../../../1_General/Navigation';
 import SpinnerButtonDeleting from './SpinnerButtonDeleting';
+import ModalDelete from './ModalDelete';
 
 //Importar funiones auxiliares
 import { deleteWordAuxiliar } from '../../../../helpers/3_Inside/words';
@@ -28,7 +29,8 @@ export default class get_words extends Component {
             urlToEdit: undefined,
             mensajeSinElementos: false,
             deletingWord: false,
-            idDeletingWord: undefined
+            idDeletingWord: undefined,
+            itemToDelete: [],
         };
     }
 
@@ -141,9 +143,8 @@ export default class get_words extends Component {
     }
 
     //Deleting word
-    deleteWord = async (urlToDelete, id) => {
+    functionToDeleteWord = async (urlToDelete, id) => {
         //For the spinner in the button
-        console.log('id:' + id + 'os')
         this.setState({
             deletingWord: true,
             idDeletingWord: id
@@ -170,6 +171,15 @@ export default class get_words extends Component {
         //console.log(`active page is ${pageNumber}`);
         this.setState({ actual_page: pageNumber }, function () {
             this.getInfo();
+        });
+    }
+
+    handleOpenModal(idToDelete) {
+        this.state.info.forEach((element, index, array) => {
+            if (element._id === idToDelete) {
+                this.setState({ itemToDelete: array[index] }, function () {
+                })
+            }
         });
     }
     //--------------------------------------------------
@@ -223,25 +233,35 @@ export default class get_words extends Component {
                                                         className="btn btn-info" to={'/edit_' + this.state.urlToEdit + '/' + inf._id}
                                                     >Edit
                                                     </Link>
+
                                                     <button
-                                                        className="btn btn-danger"
-                                                        onClick={() => this.deleteWord(this.state.urlToEdit, inf._id)}
+                                                        onClick={() => this.handleOpenModal(inf._id)}
+                                                        type="button"
+                                                        className="btn btn-info"
+                                                        data-toggle="modal"
+                                                        data-target="#exampleModal"
                                                     >
                                                         <SpinnerButtonDeleting
-                                                            deletingWord={this.state.deletingWord}
-                                                            idDeletingWord={this.state.idDeletingWord}
-                                                            idActual={inf._id}
+                                                            deletingWord={this.state.deletingWord}//True or false
+                                                            idDeletingWord={this.state.idDeletingWord}//The other id.
+                                                            idActual={inf._id}//Id a eliminar
                                                         />
                                                         Delete
                                                     </button>
                                                 </div>
-                                                {/**<div>{JSON.stringify(inf)}</div> */}
+                                                {/* <div>{JSON.stringify(inf._id)}</div> */}
                                             </td>
                                         </tr>
 
                                     ))}
                                 </tbody>
                             </table >
+
+                            <ModalDelete
+                                functionToDeleteWord={this.functionToDeleteWord}
+                                urlToEdit={this.state.urlToEdit}
+                                itemToDelete={this.state.itemToDelete}
+                            />
 
                             {/** ------------------------------*/}
                             {/**Getting buttom to get PDF */}
