@@ -14,16 +14,16 @@ export default class SpinnerButton extends Component {
         const mensaje = this.props.mensajeBoton;
         if (cargando) {
             return (
-                <button className="btn btn-primary">
+                <div className="btn btn-primary">
                     <span className="spinner-border spinner-border-sm"></span>
                     &nbsp;&nbsp;{mensaje}
-                </button>
+                </div>
             )
         } else {
             return (
-                <button className="btn btn-primary">
+                <div className="btn btn-primary">
                     Save
-                </button>
+                </div>
             )
         }
 

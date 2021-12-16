@@ -41,49 +41,38 @@ export default class Play extends Component {
         }
         //console.log('The noun´s state is: ', this.state.noun);
     }
+
+    //HELPER FUNCTIONS FOR getOneWord
+    cambiandoEstadoCargandoNuevaPalabra(position) {
+        var nuevosValoresDeEstado = this.state.cargandoNuevaPalabra;
+        nuevosValoresDeEstado[position] = 1;
+        this.setState({ cargandoNuevaPalabra: nuevosValoresDeEstado });
+    }
+    actualizandoDatosAMostrarEnPlay(data, position) {
+        let datosAux = [...this.state.datos];
+        datosAux[position] = data;
+        this.setState({ datos: datosAux });
+    }
+
     async getOneNewWord(opc) {
-        const regresarValoreEstado_CargandoNuevaPalabra = [0,0,0,0]
+        const regresarValoreEstado_CargandoNuevaPalabra = [0, 0, 0, 0];
         try {
             if (opc === 0) { //NOUNS
-                //Modificando estado CARGANDO NUEVA PALABRA
-                var nuevosValores0 = this.state.cargandoNuevaPalabra;
-                nuevosValores0[0] = 1;
-                this.setState({ cargandoNuevaPalabra: nuevosValores0 });
-                //Fin modificar estado CARGANDO NUEVA PALABRA
+                this.cambiandoEstadoCargandoNuevaPalabra(0);
                 const { data } = await axios.get(baseURL + `/words/getOneRandomNoun/${this.state.datos[0]._id}`);
-                let datosAux = [...this.state.datos];
-                datosAux[0] = data;
-                this.setState({ datos: datosAux });
+                this.actualizandoDatosAMostrarEnPlay(data, 0)
             } else if (opc === 1) { //VERBS
-                //Modificando estado CARGANDO NUEVA PALABRA
-                var nuevosValores1 = this.state.cargandoNuevaPalabra;
-                nuevosValores1[1] = 1;
-                this.setState({ cargandoNuevaPalabra: nuevosValores1 });
-                //Fin modificar estado CARGANDO NUEVA PALABRA
+                this.cambiandoEstadoCargandoNuevaPalabra(1);
                 const { data } = await axios.get(baseURL + `/words/getOneRandomVerb/${this.state.datos[1]._id}`);
-                let datosAux = [...this.state.datos];
-                datosAux[1] = data;
-                this.setState({ datos: datosAux });
+                this.actualizandoDatosAMostrarEnPlay(data, 1)
             } else if (opc === 2) { //ADJECTIVES
-                //Modificando estado CARGANDO NUEVA PALABRA
-                var nuevosValores2 = this.state.cargandoNuevaPalabra;
-                nuevosValores2[2] = 1;
-                this.setState({ cargandoNuevaPalabra: nuevosValores2 });
-                //Fin modificar estado CARGANDO NUEVA PALABRA
+                this.cambiandoEstadoCargandoNuevaPalabra(2);
                 const { data } = await axios.get(baseURL + `/words/getOneRandomAdjective/${this.state.datos[2]._id}`);
-                let datosAux = [...this.state.datos];
-                datosAux[2] = data;
-                this.setState({ datos: datosAux });
+                this.actualizandoDatosAMostrarEnPlay(data, 2)
             } else if (opc === 3) { //OTHERS
-                //Modificando estado CARGANDO NUEVA PALABRA
-                var nuevosValores3 = this.state.cargandoNuevaPalabra;
-                nuevosValores3[3] = 1;
-                this.setState({ cargandoNuevaPalabra: nuevosValores3 });
-                //Fin modificar estado CARGANDO NUEVA PALABRA
+                this.cambiandoEstadoCargandoNuevaPalabra(3);
                 const { data } = await axios.get(baseURL + `/words/getOneRandomOther/${this.state.datos[3]._id}`);
-                let datosAux = [...this.state.datos];
-                datosAux[3] = data;
-                this.setState({ datos: datosAux });
+                this.actualizandoDatosAMostrarEnPlay(data, 3)
             }
             this.setState({ cargandoNuevaPalabra: regresarValoreEstado_CargandoNuevaPalabra });
         } catch (error) {

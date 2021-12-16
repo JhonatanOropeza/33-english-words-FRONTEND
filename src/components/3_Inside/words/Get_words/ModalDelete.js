@@ -17,7 +17,7 @@ export default class ModalDelete extends Component {
                                 data-dismiss="modal"
                                 onClick={() => this.props.functionToDeleteWord(this.props.urlToEdit, this.props.itemToDelete._id)}
                             >
-                                Delete2
+                                Delete
                             </button>
                         </div>
                     </div>
