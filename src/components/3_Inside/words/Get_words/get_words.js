@@ -8,6 +8,7 @@ import Main from '../../../1_General/Main';
 import Navigation from '../../../1_General/Navigation';
 import SpinnerButtonDeleting from './SpinnerButtonDeleting';
 import ModalDelete from './ModalDelete';
+import LoadingClock from '../../../1_General/LoadingClock';
 
 //Importar funiones auxiliares
 import { deleteWordAuxiliar } from '../../../../helpers/3_Inside/words';
@@ -31,6 +32,7 @@ export default class get_words extends Component {
             deletingWord: false,
             idDeletingWord: undefined,
             itemToDelete: [],
+            cargandoDatos: false
         };
     }
 
@@ -64,6 +66,7 @@ export default class get_words extends Component {
         let page = this.state.actual_page;
         //console.log(baseURL + kindOfWordSelected + '/' + page)
         try {
+            this.setState({ cargandoDatos: true });
             const getting = await axios.get(baseURL + kindOfWordSelected + '/' + page);
             //Asignin the values por pagination that came fron the backend
             //console.log(getting.data);
@@ -84,8 +87,10 @@ export default class get_words extends Component {
             } else {
                 this.setState({ mensajeSinElementos: true });
             }
+            this.setState({ cargandoDatos: false });
         } catch (error) {
             console.log(error);
+            this.setState({ cargandoDatos: false });
         }
     }
 
@@ -208,91 +213,99 @@ export default class get_words extends Component {
                             {/** ------------------------------*/}
                             {/**Getting words */}
                             {/** ------------------------------*/}
-                            <table className="table table-striped text-center mt-3">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Word</th>
-                                        <th scope="col">Track</th>
-                                        <th scope="col">Meaning</th>
-                                        <th scope="col">Operations</th>
-                                    </tr >
-                                </thead >
+                            {this.state.cargandoDatos
+                                ?
+                                (<>
+                                    <LoadingClock color={'#fff'}/>
+                                </>)
+                                :
+                                (<>
+                                    <table className="table table-striped text-center mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Word</th>
+                                                <th scope="col">Track</th>
+                                                <th scope="col">Meaning</th>
+                                                <th scope="col">Operations</th>
+                                            </tr >
+                                        </thead >
 
-                                <tbody>
-                                    {this.state.info.map((inf, index) => (
-                                        <tr key={inf._id}>
-                                            <th scope="row">{index + 1}
-                                            </th>
-                                            <td>{inf.word}</td>
-                                            <td>{inf.track}</td>
-                                            <td>{inf.meaning}</td>
-                                            <td>
-                                                <div className="btn-group">
-                                                    <Link
-                                                        className="btn btn-info" to={'/edit_' + this.state.urlToEdit + '/' + inf._id}
-                                                    >Edit
-                                                    </Link>
+                                        <tbody>
+                                            {this.state.info.map((inf, index) => (
+                                                <tr key={inf._id}>
+                                                    <th scope="row">{index + 1}
+                                                    </th>
+                                                    <td>{inf.word}</td>
+                                                    <td>{inf.track}</td>
+                                                    <td>{inf.meaning}</td>
+                                                    <td>
+                                                        <div className="btn-group">
+                                                            <Link
+                                                                className="btn btn-info" to={'/edit_' + this.state.urlToEdit + '/' + inf._id}
+                                                            >Edit
+                                                            </Link>
 
-                                                    <button
-                                                        onClick={() => this.handleOpenModal(inf._id)}
-                                                        type="button"
-                                                        className="btn btn-info"
-                                                        data-toggle="modal"
-                                                        data-target="#exampleModal"
-                                                    >
-                                                        <SpinnerButtonDeleting
-                                                            deletingWord={this.state.deletingWord}//True or false
-                                                            idDeletingWord={this.state.idDeletingWord}//The other id.
-                                                            idActual={inf._id}//Id a eliminar
-                                                        />
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                                {/* <div>{JSON.stringify(inf._id)}</div> */}
-                                            </td>
-                                        </tr>
+                                                            <button
+                                                                onClick={() => this.handleOpenModal(inf._id)}
+                                                                type="button"
+                                                                className="btn btn-info"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModal"
+                                                            >
+                                                                <SpinnerButtonDeleting
+                                                                    deletingWord={this.state.deletingWord}//True or false
+                                                                    idDeletingWord={this.state.idDeletingWord}//The other id.
+                                                                    idActual={inf._id}//Id a eliminar
+                                                                />
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                        {/* <div>{JSON.stringify(inf._id)}</div> */}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table >
 
-                                    ))}
-                                </tbody>
-                            </table >
 
-                            <ModalDelete
-                                functionToDeleteWord={this.functionToDeleteWord}
-                                urlToEdit={this.state.urlToEdit}
-                                itemToDelete={this.state.itemToDelete}
-                            />
+                                    <ModalDelete
+                                        functionToDeleteWord={this.functionToDeleteWord}
+                                        urlToEdit={this.state.urlToEdit}
+                                        itemToDelete={this.state.itemToDelete}
+                                    />
 
-                            {/** ------------------------------*/}
-                            {/**Getting buttom to get PDF */}
-                            {/** ------------------------------*/}
-                            <div className="container mt-3">
-                                <div className="d-flex justify-content-center">
-                                    <Link className="btn btn-success" to="/PDF">
-                                        Get PDF
-                                    </Link>
-                                </div>
-                            </div>
-                            {/** ------------------------------*/}
-                            {/**Inseting Pagination */}
-                            {/** ------------------------------*/}
-                            {
-                                this.state.total > 3 &&
-                                <div className="container mt-3">
-                                    <div className="d-flex justify-content-center">
-
-                                        <Pagination
-                                            activePage={this.state.actual_page}
-                                            itemsCountPerPage={this.state.itemsPerPage}
-                                            totalItemsCount={this.state.total}
-                                            pageRangeDisplayed={5}
-                                            onChange={this.handlePageChange.bind(this)}
-                                            itemClass="page-item"
-                                            linkClass="page-link"
-                                        />
+                                    {/** ------------------------------*/}
+                                    {/**Getting buttom to get PDF */}
+                                    {/** ------------------------------*/}
+                                    <div className="container mt-3">
+                                        <div className="d-flex justify-content-center">
+                                            <Link className="btn btn-success" to="/PDF">
+                                                Get PDF
+                                            </Link>
+                                        </div>
                                     </div>
-                                </div>
-                            }
+                                    {/** ------------------------------*/}
+                                    {/**Inseting Pagination */}
+                                    {/** ------------------------------*/}
+                                    {
+                                        this.state.total > 3 &&
+                                        <div className="container mt-3">
+                                            <div className="d-flex justify-content-center">
+
+                                                <Pagination
+                                                    activePage={this.state.actual_page}
+                                                    itemsCountPerPage={this.state.itemsPerPage}
+                                                    totalItemsCount={this.state.total}
+                                                    pageRangeDisplayed={5}
+                                                    onChange={this.handlePageChange.bind(this)}
+                                                    itemClass="page-item"
+                                                    linkClass="page-link"
+                                                />
+                                            </div>
+                                        </div>
+                                    }
+                                </>)}
                         </div >
                     )
                 }

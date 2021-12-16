@@ -44,3 +44,8 @@ body{
     background: none;
     outline: 'none'
 }
+
+/*      LOADING    */
+.LoadingClock{
+    background-color: #CBCBCB;
+}
