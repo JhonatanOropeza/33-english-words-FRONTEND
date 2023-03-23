@@ -24,6 +24,9 @@ export default class Insert_word extends Component {
 
     //Evento caundo se le de click al botón del formulario
     onSubmit = async (e) => {
+        /* e.preventDefault();
+        console.log('You clicked submit1.');
+        return false; */
         e.preventDefault();
         //For the spinner in the button
         this.setState({ storingWord: true });
@@ -31,16 +34,18 @@ export default class Insert_word extends Component {
             return;
         }
         //Cambiando el estado de type
-        if (this.state.checkboxes.c1 === true) {
-            this.state.type = 'noun';
+        //Since 22/03/2023 I Stopped using this part of the code by optimization before conecting with BK
+        /* if (this.state.checkboxes.c1 === true) {
+            this.setState({ type: 'noun' });
         } else if (this.state.checkboxes.c2 === true) {
-            this.state.type = 'verb';
+            this.setState({ type: 'verb' });
         } else if (this.state.checkboxes.c3 === true) {
-            this.state.type = 'adjective';
+            this.setState({ type: 'adjective' });
         } else if (this.state.checkboxes.c4 === true) {
-            this.state.type = 'other';
-        }
+            this.setState({ type: 'other' });
+        } */
         //Preparando datos para almacenar
+
         const newWord = {
             word: this.state.word,
             track: this.state.track,
@@ -49,19 +54,19 @@ export default class Insert_word extends Component {
         }
         try {
             //Saving the new word into the correct collection 
-            if (this.state.type === 'noun') {
+            if (this.state.checkboxes.c1 === true) {
                 await axios.post(baseURL + '/words/noun', newWord);
                 window.alert("The noun was added");
-            } 
-            if (this.state.type === 'verb') {
+            }
+            if (this.state.checkboxes.c2 === true) {
                 await axios.post(baseURL + '/words/verb', newWord);
                 window.alert("The verb was added");
-            } 
-            if (this.state.type === 'adjective') {
+            }
+            if (this.state.checkboxes.c3 === true) {
                 await axios.post(baseURL + '/words/adjective', newWord);
                 window.alert("The adjective was added");
-            } 
-            if (this.state.type === 'other') {
+            }
+            if (this.state.checkboxes.c4 === true) {
                 await axios.post(baseURL + '/words/other_word', newWord);
                 window.alert("The other word was added");
             }
@@ -107,13 +112,13 @@ export default class Insert_word extends Component {
                             <div className="card card-body">
                                 <h4>Insert a word</h4>
 
-                                <form onSubmit={this.onSubmit}>
-                                    <div className="form-group">
+                                <form onSubmit={this.onSubmit} >
+                                    <div className="form-group" >
                                         {/* 1.- Inserting the word */}
                                         <div className="form-group">
                                             <input type="text"
                                                 className="form-control"
-                                                placeholder="Insert the new word"
+                                                placeholder="Insert the 'name' of the new word"
                                                 name="word"
                                                 onChange={this.selecting_user_dates}
                                                 required />
@@ -127,7 +132,7 @@ export default class Insert_word extends Component {
                                                 onChange={this.selecting_user_dates}
                                                 required />
                                         </div>
-                                        {/* 1.- Inserting the meaning*/}
+                                        {/* 3.- Inserting the meaning*/}
                                         <div className="form-group">
                                             <input type="text"
                                                 className="form-control"
@@ -177,9 +182,9 @@ export default class Insert_word extends Component {
                                         </div>
                                     </div>
                                     {/* Bottom*/}
-                                    <div className="form-group">
-                                        <SpinnerButton storingWord={this.state.storingWord} mensajeBoton={'Saving'}/>
-                                    </div>
+                                    <button type="submit" className="btn btn-primary" >
+                                        <SpinnerButton storingWord={this.state.storingWord} mensajeBoton={'Saving'} />
+                                    </button>
                                 </form>
 
                             </div>

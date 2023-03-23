@@ -74,6 +74,7 @@ export default class App extends Component {
   //3.2.- signoff
   signoff = () => {
     this.setState({ usuario: null });
+    //this.props.history.push('/')
     deleteToken();
   }
 

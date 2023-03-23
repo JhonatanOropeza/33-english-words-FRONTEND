@@ -68,11 +68,12 @@ export default class get_words extends Component {
         try {
             this.setState({ cargandoDatos: true });
             const getting = await axios.get(baseURL + kindOfWordSelected + '/' + page);
+            console.log(baseURL + kindOfWordSelected + '/' + page);
             //Asignin the values por pagination that came fron the backend
             //console.log(getting.data);
             //For a reason the backend returns a string with actual_page, but it´s converted with next line
-            let actual_page1 = parseInt(getting.data.actual_page, 10);
-            //console.log('get_words', getting.data)
+            let actual_page1 = parseInt(getting.data.actual_page, 5);
+            console.log("Actual page:", actual_page1);
             if (getting.data.result.length > 0) {
                 this.setState({
                     info: getting.data.result,
@@ -289,7 +290,7 @@ export default class get_words extends Component {
                                     {/**Inseting Pagination */}
                                     {/** ------------------------------*/}
                                     {
-                                        this.state.total > 3 &&
+                                        this.state.total > 5 &&
                                         <div className="container mt-3">
                                             <div className="d-flex justify-content-center">
 

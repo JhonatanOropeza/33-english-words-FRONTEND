@@ -124,7 +124,7 @@ export default class wordsInPDF extends Component {
                         <View style={styles.section1}>
                             <Text>User: {this.state.user.username}</Text>
                             <Text>Email: {this.state.user.email} </Text>
-                            <Text>Kind of wors to print: {this.state.kindOfWord}</Text>
+                            <Text>Kind of word to print: {this.state.kindOfWord}</Text>
                         </View>
                         {/** A Line XD XD */}
                         <View style={styles.line} />
